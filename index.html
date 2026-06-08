@@ -375,14 +375,16 @@ function drawPaw(ctx,cx,cy,r,color){ctx.save();ctx.fillStyle=color;
   ctx.beginPath();ctx.ellipse(cx,cy+r*0.45,r*0.8,r*0.62,0,0,Math.PI*2);ctx.fill();
   [[-r*0.72,-r*0.32],[-r*0.26,-r*0.72],[r*0.26,-r*0.72],[r*0.72,-r*0.32]].forEach(([dx,dy])=>{ctx.beginPath();ctx.ellipse(cx+dx,cy+dy,r*0.27,r*0.33,0,0,Math.PI*2);ctx.fill();});
   ctx.restore();}
-function roundRectFill(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();ctx.fill();}
+function roundRectPath(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function roundRectFill(ctx,x,y,w,h,r){roundRectPath(ctx,x,y,w,h,r);ctx.fill();}
 function decorate(cv){const ctx=cv.getContext("2d"),w=cv.width,h=cv.height;
   const r=Math.max(8,Math.round(Math.min(w,h)*0.022)),inset=r*1.8,pc="rgba(255,255,255,.72)";
   const nX=Math.max(4,Math.round((w-2*inset)/(r*4.5))),nY=Math.max(4,Math.round((h-2*inset)/(r*4.5)));
   for(let i=0;i<=nX;i++){const x=inset+(w-2*inset)*i/nX;drawPaw(ctx,x,inset,r,pc);drawPaw(ctx,x,h-inset,r,pc);}
   for(let j=1;j<nY;j++){const y=inset+(h-2*inset)*j/nY;drawPaw(ctx,inset,y,r,pc);drawPaw(ctx,w-inset,y,r,pc);}
   const fs=Math.max(13,Math.round(w*0.04));ctx.font=`700 ${fs}px Fredoka, Nunito, sans-serif`;
-  const label="🎂 "+new Date().toLocaleDateString();const tw=ctx.measureText(label).width;
+  const dt=new Date();
+  const label="🎂 "+String(dt.getDate()).padStart(2,"0")+"/"+String(dt.getMonth()+1).padStart(2,"0")+"/"+dt.getFullYear();const tw=ctx.measureText(label).width;
   const px=fs*0.6,py=fs*0.42,bw=tw+px*2,bh=fs+py*2,bx=w-bw-inset*0.7,by=h-bh-inset*0.7;
   ctx.fillStyle="rgba(80,55,40,.6)";roundRectFill(ctx,bx,by,bw,bh,bh/2);
   ctx.fillStyle="#fff";ctx.textBaseline="middle";ctx.textAlign="left";ctx.fillText(label,bx+px,by+bh/2+1);}
@@ -394,6 +396,35 @@ function shareOrSave(dataURL,name){if(!dataURL)return;let blob;try{blob=dataURLt
   const file=new File([blob],name+".jpg",{type:"image/jpeg"});
   if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:"Happy Birthday 🎂"}).catch(()=>{});}
   else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name+".jpg";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);}}
+/* collage of all cat photos that have been taken -> one shareable image */
+function makeCatCollage(){
+  const list=C.m.cats.filter(c=>state.photos[c.id]);
+  if(!list.length)return;
+  const n=list.length, cols=n<=2?Math.max(1,n):(n===4?2:3), rows=Math.ceil(n/cols);
+  const cell=520,gap=18,pad=22,header=98;
+  const W=cols*cell+gap*(cols-1)+pad*2, H=header+rows*cell+gap*(rows-1)+pad*2;
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const ctx=cv.getContext("2d");
+  ctx.fillStyle="#FBF1DE";ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#6B4F3A";ctx.textAlign="center";ctx.textBaseline="middle";ctx.font='600 44px Fredoka, Nunito, sans-serif';
+  ctx.fillText("Happy Birthday, "+C.m.player.name+" 🎂",W/2,header/2+8);
+  let done=0;
+  const finish=()=>{ if(++done===n){ try{ shareOrSave(cv.toDataURL("image/jpeg",.9),"catbook-collage"); }catch(e){} } };
+  list.forEach((cat,idx)=>{
+    const img=new Image();
+    img.onload=()=>{
+      const r=Math.floor(idx/cols), ci=idx%cols;
+      const itemsInRow=(r===rows-1)?(n-cols*(rows-1)):cols;
+      const rowW=itemsInRow*cell+(itemsInRow-1)*gap, startX=(W-rowW)/2;
+      const x=startX+ci*(cell+gap), y=header+pad+r*(cell+gap);
+      const s=Math.max(cell/img.width,cell/img.height), dw=img.width*s, dh=img.height*s;
+      ctx.save();roundRectPath(ctx,x,y,cell,cell,28);ctx.clip();ctx.drawImage(img,x+(cell-dw)/2,y+(cell-dh)/2,dw,dh);ctx.restore();
+      ctx.strokeStyle="#E6C79B";ctx.lineWidth=5;roundRectPath(ctx,x,y,cell,cell,28);ctx.stroke();
+      finish();
+    };
+    img.onerror=finish;
+    img.src=state.photos[cat.id];
+  });
+}
 
 /* Wordle */
 function scWordle(){const c=card();const target=C.wordle.target.toUpperCase(),MAX=C.wordle.maxGuesses||6;
@@ -479,6 +510,7 @@ function updateBookCount(){document.getElementById("bookCount").textContent=phot
 function openSheet(){const body=document.getElementById("bookBody");body.innerHTML="";
   const found=C.m.cats.filter(c=>state.photos[c.id]).length;
   const sum=el("div","summary");sum.innerHTML=`<span class="face">${catFace("#E9A23B",30)}</span><span class="lbl">Cats collected</span><span class="cnt">${found} / ${C.m.cats.length}</span>`;body.appendChild(sum);
+  if(found>=2){const cb=el("button","sharebtn","🖼️ Make a collage of the cats");cb.style.marginBottom="4px";cb.onclick=makeCatCollage;body.appendChild(cb);}
   if(photoCount()===0)body.appendChild(el("div","empty","No photos yet — they'll appear here as you take them. 🐾"));
   C.m.cats.forEach(cat=>body.appendChild(profileCard(cat)));
   if(state.photos.memory){const p=el("div","pcard");p.appendChild(el("div","namepill","A memory 💛"));

@@ -13,16 +13,16 @@ HUNT.register('manifest', {
   // Add  source:"gallery"  to a slot to make it upload from the gallery instead (no camera).
   // accent: pink | blue | green | yellow  (the Catbook label colour)
   cats: [
-    { id:"c1", name:"Mimi", personality:"Lazybones",   powerLevel:80, visits:174, color:"Persian Black",  topGoodies:["By the Door","String","Sofa"], accent:"pink",   face:"#FFFFFF" },
-    { id:"c2", name:"Jimki",  personality:"Queen",  powerLevel:55, visits:96,  color:"Persian Black",       topGoodies:["Paper Ball","Cat Tree","Bathroom"],        accent:"yellow", face:"#E9A23B" },
-    { id:"c3", name:"Kochu",   personality:"Zoomy",    powerLevel:120,visits:210, color:"Persian Black",  topGoodies:["Yellow Ball","Carpet","Goblin Cave"],    accent:"blue",   face:"#3A3A3A" },
-    { id:"c4", name:"Theo",  personality:"Naughty", powerLevel:42, visits:64,  color:"Tabby",  topGoodies:["String Toy","Cardboard","FOOOOD"],accent:"green",  face:"#C8853B" },
+    { id:"c1", name:"Mimi", personality:"Lazybones + Escape Artist",   powerLevel:80, visits:300, color:"Persian Black",  topGoodies:["By the Door","Dropping Things","Sofa"], accent:"pink",   face:"#FFFFFF" },
+    { id:"c2", name:"Jimki",  personality:"Snarky Diva",  powerLevel:55, visits:300,  color:"Persian Black",       topGoodies:["Paper Ball","Cat Tree","Bathroom"],        accent:"yellow", face:"#E9A23B" },
+    { id:"c3", name:"Kochu",   personality:"Zoom Zoomer",    powerLevel:120,visits:210, color:"Persian Black",  topGoodies:["Yellow Ball","Carpet","Goblin Cave"],    accent:"blue",   face:"#3A3A3A" },
+    { id:"c4", name:"Theo",  personality:"Naughty + Smort", powerLevel:150, visits:64,  color:"Tabby",  topGoodies:["String Toy","Cardboard","FOOOOD"],accent:"green",  face:"#C8853B" },
     // 5th slot: uploaded from the GALLERY (no camera). Rename / re-theme freely.
-    { id:"c5", name:"Chico",  personality:"Gentlest", powerLevel:10000000, visits:10000000,  color:"Calico",  topGoodies:["Cat Tunnel","Rider Jacket","Couch"], source:"gallery", accent:"lavender",  face:"#E6E6FA" }
+    { id:"c5", name:"Chico",  personality:"Gentlest", powerLevel:10000000, visits:10000000,  color:"Calico",  topGoodies:["Cat Tunnel","Rider Jacket","His <3 Mommy"], source:"gallery", accent:"lavender",  face:"#E6E6FA" }
   ],
 
   welcome: {
-    title: "Happy Birthday! 🎂",
+    title: "Happy Birthday! my love 🎂",
     body: "Lets begin the hunt. Solve your favorite puzzles. They will give you a riddle. <br><br>Cracking the riddle will take you to a secret spot. <br><br>Spot will have a codeword to take your to next task (or a gift).  Ready?"
   },
 
@@ -42,7 +42,7 @@ HUNT.register('manifest', {
 
   photoTasks: {
     catSelfies: { title:"Selfie patrol 📷", body:"Round up the troublemakers. Take a selfie with each cat you can find — they'll each get a page in your Catbook.", minRequired:1 },
-    memory:     { title:"One for the books 💛", body:"Find spotty and take a selfie with him or Strike a pose right here right now! This one's for the memory." }
+    memory:     { title:"One for the books 💛", body:"Find Spotty and take a selfie with him or Strike a pose right here right now! This one's for the memory." }
   },
 
   finale: {

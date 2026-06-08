@@ -18,7 +18,7 @@ HUNT.register('manifest', {
     { id:"c3", name:"Kochu",   personality:"Zoomy",    powerLevel:120,visits:210, color:"Persian Black",  topGoodies:["Yellow Ball","Carpet","Goblin Cave"],    accent:"blue",   face:"#3A3A3A" },
     { id:"c4", name:"Theo",  personality:"Naughty", powerLevel:42, visits:64,  color:"Tabby",  topGoodies:["String Toy","Cardboard","FOOOOD"],accent:"green",  face:"#C8853B" },
     // 5th slot: uploaded from the GALLERY (no camera). Rename / re-theme freely.
-    { id:"c5", name:"Chico",  personality:"Gentlest", powerLevel:10000000, visits:10000000,  color:"Calico",  topGoodies:["Cat Tunnel","Rider Jacket","Couch"],accent:"lavender",  face:"#E6E6FA" }
+    { id:"c5", name:"Chico",  personality:"Gentlest", powerLevel:10000000, visits:10000000,  color:"Calico",  topGoodies:["Cat Tunnel","Rider Jacket","Couch"], source:"gallery", accent:"lavender",  face:"#E6E6FA" }
   ],
 
   welcome: {

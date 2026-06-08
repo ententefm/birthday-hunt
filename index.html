@@ -127,6 +127,7 @@ small.hint-link{display:inline-block;margin-top:12px;color:var(--accent);font-we
 .qcell:active{transform:scale(.93);}
 .qcell.conflict{box-shadow:inset 0 0 0 3px var(--accent);}
 .qcell .mark{opacity:.55;font-size:19px;font-weight:700;}
+.qcell .mark.auto{opacity:.26;font-weight:600;}
 
 /* Photos / Catbook */
 .slotgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px;}
@@ -413,9 +414,15 @@ function scQueens(){const c=card();const N=C.queens.size,regions=C.queens.region
     const touch=Math.abs(a[0]-b[0])<=1&&Math.abs(a[1]-b[1])<=1;if(line||touch){bad.add(a.join("-"));bad.add(b.join("-"));}}return bad;};
   const solved=()=>cats().length===N&&conflicts().size===0;
   const draw=()=>{grid.innerHTML="";const bad=conflicts();
+    const cc=cats();const auto=new Set();
+    cc.forEach(([cr,ccol])=>{for(let k=0;k<N;k++){auto.add(cr+"-"+k);auto.add(k+"-"+ccol);}
+      for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const nr=cr+dr,nc=ccol+dc;if(nr>=0&&nr<N&&nc>=0&&nc<N)auto.add(nr+"-"+nc);}});
     for(let r=0;r<N;r++)for(let cI=0;cI<N;cI++){const cell=el("div","qcell");cell.style.background=`var(${palette[regions[r][cI]%5]})`;
-      if(bad.has(r+"-"+cI))cell.classList.add("conflict");
-      if(g[r][cI]===1)cell.innerHTML='<span class="mark">✕</span>';else if(g[r][cI]===2)cell.textContent="🐈";
+      const key=r+"-"+cI;
+      if(bad.has(key))cell.classList.add("conflict");
+      if(g[r][cI]===2)cell.textContent="🐈";
+      else if(g[r][cI]===1)cell.innerHTML='<span class="mark">✕</span>';
+      else if(auto.has(key))cell.innerHTML='<span class="mark auto">✕</span>';
       cell.onclick=()=>{g[r][cI]=(g[r][cI]+1)%3;draw();if(solved()){note.className="note good";note.textContent="Perfect — everyone's home! 🐾";finishQ(c);}else note.textContent="";};
       grid.appendChild(cell);}};
   reset.onclick=()=>{g=Array.from({length:N},()=>Array(N).fill(0));note.textContent="";draw();};

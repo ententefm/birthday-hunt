@@ -3,9 +3,9 @@
 HUNT.register('connections.default', {
   lives: 5,
   groups: [
-    { category:"OUR CATS",        color:"yellow", words:["Snowball","Pumpkin","Shadow","Biscuit"] },
-    { category:"GAMES YOU PLAY",  color:"green",  words:["WORDLE","STRANDS","MINI","TANGO"] },
-    { category:"IN THE BEDROOM",  color:"blue",   words:["PILLOW","LAMP","DRAWER","MIRROR"] },
-    { category:"___ + BOX",       color:"purple", words:["LITTER","JUKE","SAND","MAIL"] }
+    { category:"OUR CATS",        color:"yellow", words:["LazyBum","Naughty","Zoomy","Queen"] },
+    { category:"GAMES YOU PLAY",  color:"green",  words:["GENSHIN","CROSSPLAY","JIGSAW","WORDLE"] },
+    { category:"Our Most Memorable Trips",  color:"blue",   words:["Koh Chang","Hanoi","Brooklyn","Central Park Zoo"] },
+    { category:"Your Most Fav Boi",       color:"purple", words:["CALICO","GENTLEST","FLUFFIEST","LIL BOY"] }
   ]
 });

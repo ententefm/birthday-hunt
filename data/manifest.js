@@ -47,7 +47,7 @@ HUNT.register('manifest', {
 
   finale: {
     title: "Happy Birthday, my love 🎉",
-    message: "You found them all. Every cat, every clue, every little thing hidden for you today. I hope it made you smile. ❤️",
+    message: "You found them all. Every cat, every clue, every little thing hidden for you today. I hope it made you smile. ❤️ Checkout your Catbook !",
     mainGiftHint: "(your big gift is at the final spot)"
   },
 

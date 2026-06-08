@@ -28,7 +28,7 @@ HUNT.register('manifest', {
 
   clues: {
     afterConnections: {
-      riddle: "Go to the place which held our <b>BOOKS</b> 📕<br>. You will find your first codeword & something nice. ",
+      riddle: "Go to the place which <i>held</i> our <b>BOOKS 📕 </b>. <br>You will find your first codeword & something nice. ",
       keyword: "SUNFLOWER"
     },
     afterWordle: {
@@ -36,7 +36,7 @@ HUNT.register('manifest', {
       keyword: "RING"
     },
     afterQueens: {
-      riddle: "All the cats are home. 🐾<br>Your last surprise is waiting beside a heart shaped puzzle. "
+      riddle: "All the cats are home. 🐾<br>Your last surprise is waiting behind a HEART SHAPED puzzle. "
     }
   },
 

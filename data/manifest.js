@@ -23,7 +23,7 @@ HUNT.register('manifest', {
 
   welcome: {
     title: "Happy Birthday! 🎂",
-    body: "A few of the cats have hidden little surprises around the house — but they won't hand them over without a puzzle or two.<br><br>Solve each one, follow the clue to a hiding spot, and snap some selfies along the way. Ready?"
+    body: "Lets begin the hunt. Solve your favorite puzzles. They will give you a riddle. <br><br>Cracking the riddle will take you to a secret spot. <br><br>Spot will have a codeword to take your to next task (or a gift).  Ready?"
   },
 
   clues: {
@@ -42,7 +42,7 @@ HUNT.register('manifest', {
 
   photoTasks: {
     catSelfies: { title:"Selfie patrol 📷", body:"Round up the troublemakers. Take a selfie with each cat you can find — they'll each get a page in your Catbook.", minRequired:1 },
-    memory:     { title:"One for the books 💛", body:"Strike a pose right here right now! This one's for the memory." }
+    memory:     { title:"One for the books 💛", body:"Find spotty and take a selfie with him or Strike a pose right here right now! This one's for the memory." }
   },
 
   finale: {
